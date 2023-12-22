@@ -1,7 +1,13 @@
+import 'package:digimon_world_adventure_app/style/responsive_screen.dart';
 import 'package:flutter/material.dart';
 import 'distance_tracker.dart';
+import 'package:go_router/go_router.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 void main() {
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  FlutterNativeSplash.remove();
   runApp(const MyApp());
 }
 
@@ -35,7 +41,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: distanceTracker, //myHomePage
+      home: myHomePage, //distanceTracker
     );
   }
 }
@@ -90,34 +96,36 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+      body: ResponsiveScreen(
+        mainAreaProminence: 0.45,
+        squarishMainArea: Center(
+          child: Transform.rotate(
+            angle: -0.1,
+            child: const Text(
+              'Flutter Game Template!',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontFamily: 'Permanent Marker',
+                fontSize: 55,
+                height: 1,
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
+          ),
+        ), rectangularMenuArea: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FilledButton(
+            onPressed: () {
+              GoRouter.of(context).go('/play');
+            },
+            child: const Text('Play'),
+          ),
+          FilledButton(
+            onPressed: () => GoRouter.of(context).push('/settings'),
+            child: const Text('Settings'),
+          ),
+        ],
+      ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,

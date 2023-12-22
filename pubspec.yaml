@@ -31,6 +31,8 @@ dependencies:
   flutter:
     sdk: flutter
   sensors_plus: ^3.0.2
+  flutter_native_splash: ^2.3.2
+  go_router: ^10.1.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
